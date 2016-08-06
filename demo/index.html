@@ -40,10 +40,14 @@
 			<demo-snippet>
 				<template>
 					<exm-token-input id="dif1" label="Users" value="Ronna"></exm-token-input>
-					<exm-token-input id="dif2" label="Users" value="1,3"></exm-token-input>
+					<exm-token-input id="dif2" label="Users (Default item path)" value="1,3"></exm-token-input>
+					<exm-token-input id="dif3" label="Users (Custom item path)" value="2" data-value-path="id" data-label-path="name"></exm-token-input>
+					<exm-token-input id="dif4" label="Users (Custom item deep path)" value="3" data-value-path="user.id" data-label-path="user.name"></exm-token-input>
 					<script>
 						document.getElementById('dif1').data = ['Rubin','Gennie','Ronna','Jacquie','Norene','Beatris','Ginny','Tiesha','Leonore','Evonne'];
-						document.getElementById('dif2').data = [ { 'id': '1', 'label': 'Rubin' }, { 'id': '2', 'label': 'Gennie' }, { 'id': '3', 'label': 'Ronna' }];
+						document.getElementById('dif2').data = [ { 'value': '1', 'label': 'Rubin' }, { 'value': '2', 'label': 'Gennie' }, { 'value': '3', 'label': 'Ronna' }];
+						document.getElementById('dif3').data = [ { 'id': '1', 'name': 'Rubin' }, { 'id': '2', 'name': 'Gennie' }, { 'id': '3', 'name': 'Ronna' }];
+						document.getElementById('dif4').data = [ { 'user': {'id': '1', 'name': 'Rubin' } }, { 'user': { 'id': '2', 'name': 'Gennie' } }, {  'user': { 'id': '3', 'name': 'Ronna' } }];
 					</script>
 				</template>
 			</demo-snippet>
@@ -82,7 +86,7 @@
 					<exm-token-input label="Bet Amount Values" allowed-pattern='[0-9]' prevent-invalid-input>
 						<div prefix>$</div>
 					</exm-token-input>
-					<exm-token-input label="Animals" value="1" data='[ { "id": "1", "label": "Rubin" }, { "id": "2", "label": "Gennie" }, { "id": "3", "label": "Ronna" }]' disabled></exm-token-input>
+					<exm-token-input label="Disabled input" value="Test" disabled></exm-token-input>
 				</template>
 			</demo-snippet>
 		</div>

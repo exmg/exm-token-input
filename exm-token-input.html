@@ -56,7 +56,7 @@ Paper style token input element
 				@apply(--layout-horizontal);
 			}
 			iron-selector > * {
-				padding: 8px;
+				padding: 16px 16px;
 			}
 			.horizontal-section {
 				padding: 0;
@@ -83,7 +83,7 @@ Paper style token input element
 			<div class="container">
 				<span class="tokens">
 					<template is="dom-repeat" items="[[_valueAsItemArray(value, _modeDropDown)]]" as="token">
-						<paper-button tabindex="-1" on-tap="_handleDeleteToken" data-token$="[[token.id]]">[[token.label]]<iron-icon icon="clear"></iron-icon></paper-button>
+						<paper-button tabindex="-1" on-tap="_handleDeleteToken" data-token$="[[_getItemValue(token)]]">[[_getItemLabel(token)]]<iron-icon icon="clear"></iron-icon></paper-button>
 					</template>
 					<input id="inputValue" is="iron-input" bind-value="{{_inputValue}}" allowed-pattern="[[allowedPattern]]" prevent-invalid-input="[[preventInvalidInput]]" disabled$="[[disabled]]">
 				</span>
@@ -103,7 +103,7 @@ Paper style token input element
 			<div class="dropdown-content">
 				<iron-selector id="itemList">
 					<template is="dom-repeat" items="{{_filteredItems}}" as="item">
-						<div name="{{item.id}}">{{item.label}}</div>
+						<div name="[[_getItemValue(item)]]">[[_getItemLabel(item)]]</div>
 					</template>
 				</iron-selector>
 			</div>
@@ -138,6 +138,16 @@ Paper style token input element
 					type: Object,
 					observer: '_dataChanged',
 					value: function() { return {}; }
+				},
+
+				dataValuePath: {
+					type: String,
+					value: 'value'
+				},
+
+				dataLabelPath: {
+					type: String,
+					value: 'label'
 				},
 
 				/**
@@ -277,6 +287,7 @@ Paper style token input element
 
 			_setDataSource: function(dataSource) {
 				this.dataSource = dataSource;
+				this._initializeItems();
 			},
 
 			_dataChanged: function(data) {
@@ -284,11 +295,12 @@ Paper style token input element
 					this._setDataSource(data);
 				}
 				if (Array.isArray(data)) {
-					this._setDataSource(function() {
-						return data;
-					});
+					this.async(function() {
+						this._setDataSource(function() {
+							return data;
+						});
+					}.bind(this));
 				}
-				this._initializeItems();
 			},
 
 			_initializeItems: function() {
@@ -307,14 +319,15 @@ Paper style token input element
 			_setItems: function(data) {
 				if(data.length > 0 && typeof data[0] === 'string') {
 					var items = [];
-					data.forEach(function(item) {
-						items.push({"id": item, "label": item});
-					});
+					data.forEach(function(value) {
+						var item = {};
+						item[this.dataValuePath] = item[this.dataLabelPath] = value;
+						items.push(item);
+					}.bind(this));
 					this.set('_items', items);
 				} else {
 					this.set('_items', data);
 				}
-
 				this.set('_modeDropDown', true);
 			},
 
@@ -332,6 +345,25 @@ Paper style token input element
 				this._filterItems();
 			},
 
+			_lookupItemByPath: function(item, path) {
+				if(item === undefined) {
+					return;
+				}
+				var parts = path.split(".");
+				if (parts.length === 1){
+					return item[parts[0]];
+				}
+				return this._lookupItemByPath(item[parts[0]], parts.slice(1).join("."));
+			},
+
+			_getItemLabel: function(item) {
+				return this._lookupItemByPath(item, this.dataLabelPath);
+			},
+
+			_getItemValue: function(item) {
+				return this._lookupItemByPath(item, this.dataValuePath);
+			},
+
 			_valueAsArray: function() {
 				var value = this.value.split(',');
 				return value.length === 1 && value[0] === '' ? [] : value;
@@ -340,12 +372,13 @@ Paper style token input element
 			_valueAsItemArray: function() {
 				var values = this._valueAsArray();
 				var items = [];
-				values.forEach(function(id) {
-					var item = { "id": id, "label": id };
+				values.forEach(function(value) {
+					var item = {};
+					item[this.dataValuePath] = item[this.dataLabelPath] = value;
 					if(this._modeDropDown) {
 						item = this._items.find(function(item) {
-							return item.id === id;
-						});
+							return this._getItemValue(item) === value;
+						}.bind(this));
 					}
 					items.push(item);
 				}.bind(this));
@@ -354,8 +387,8 @@ Paper style token input element
 
 			_handleItemSelected: function(e) {
 				var item = this._items.find(function(item) {
-					return e.detail === item.id;
-				});
+					return e.detail === this._getItemValue(item);
+				}.bind(this));
 				this._addToken(item);
 				this.async(function() {
 					this.focus();
@@ -363,7 +396,7 @@ Paper style token input element
 			},
 
 			/**
-			 * Recalculate the string width after input change
+			 * Recalculate string width after input change
 			 */
 			_observeInputChange: function() {
 				this.$.inputValue.style.width = (this.$.inputWidthHelper.offsetWidth + 10) + 'px';
@@ -374,14 +407,14 @@ Paper style token input element
 				if(this._hasDropDown && this._filteredItems) {
 					this.splice('_filteredItems', 0, this._filteredItems.length);
 					var filtered = this._items.filter(function(item) {
-						return this._inputValue.length === 0 || (item.label.toLowerCase()).indexOf(this._inputValue.toLowerCase()) !== -1;
+						return this._inputValue.length === 0 || (this._getItemLabel(item).toLowerCase()).indexOf(this._inputValue.toLowerCase()) !== -1;
 					}.bind(this));
 					this._items.forEach(function(item) {
 						var values = this._valueAsArray();
 						var itemIndex = filtered.findIndex(function(filteredItem) {
-							return filteredItem.id === item.id;
-						});
-						if(values.indexOf(item.id) === -1 && itemIndex !== -1) {
+							return this._getItemValue(filteredItem) === this._getItemValue(item);
+						}.bind(this));
+						if(values.indexOf(this._getItemValue(item)) === -1 && itemIndex !== -1) {
 							this.push('_filteredItems', item);
 						}
 					}.bind(this));
@@ -418,12 +451,13 @@ Paper style token input element
 			_onEnter: function() {
 				if(this.$.dropdownInput.dropdown.opened && this._filteredItems.length > 0) {
 					var item = this._items.find(function(item) {
-						return item.id === this.$$('iron-selector').selectedItem.name;
+						return this._getItemValue(item) === this.$$('iron-selector').selectedItem.name;
 					}.bind(this));
 					this._addToken(item);
 				} else {
 					if(this._inputValue && this._inputValue.length > 0 && !this._modeDropDown) {
-						var item = {"id": this._inputValue, "label": this._inputValue};
+						var item = {};
+						item[this.dataValuePath] = item[this.dataLabelPath] = this._inputValue;
 						this._addToken(item);
 					}
 				}
@@ -449,7 +483,7 @@ Paper style token input element
 				if(this.maxTokens && values.length >= this.maxTokens) {
 					return;
 				}
-				values.push(item.id);
+				values.push(this._getItemValue(item));
 				this.set('value', values.toString());
 				this._resetInput();
 				this._autoValidate();
@@ -491,7 +525,6 @@ Paper style token input element
 			},
 
 			_handleInputBlur: function() {
-				console.log('_handleInputBlur');
 				this._triggerComputeFloatLabel();
 				this._autoValidate();
 				if(this._hasDropDown && this.$.dropdownInput.dropdown.opened) {
