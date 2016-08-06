@@ -2,6 +2,24 @@
   "name": "exm-token-input",
   "description": "Paper style token input element",
   "main": "exm-token-input.html",
+  "version": "1.0.0",
+  "authors": [
+    "Mark Smits"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/exmg/exm-token-input.git"
+  }
+  "keywords": [
+    "web-components",
+    "web-component",
+    "polymer",
+    "token",
+    "input",
+    "paper",
+    "material"
+  ],
+  "license": "MIT License",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "neon-animation": "PolymerElements/neon-animation#^1.2.4",
