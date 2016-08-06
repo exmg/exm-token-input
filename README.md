@@ -1,6 +1,6 @@
 # \<exm-token-input\>
 
-Paper style token input element
+Paper style token input element. Please visit [API Documentation and demo](http://exmg.github.io/exm-token-input/)
 
 ## Install the Polymer-CLI
 
