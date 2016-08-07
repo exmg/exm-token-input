@@ -121,7 +121,7 @@ Paper style token input element
 				label: String,
 
 				/**
-				* Value contains a comma seperated list of the selected items.
+				* Value contains a comma seperated list of the selected items. In case you use data objects the value property will contain a comma seperated list of values located at the dataValuePath.
 				*/
 				value: {
 					notify: true,
@@ -132,7 +132,7 @@ Paper style token input element
 				},
 
 				/**
-				* The data attribute can be used to set the list box options. This method expects an array or function.
+				* The data attribute can be used to set the list box options. This method expects an array or function of objects or string values. If using an array of objects the default properties are value and label [{"value": 21, "label": "Mark"},{...}]
 				*/
 				data: {
 					type: Object,
@@ -140,11 +140,17 @@ Paper style token input element
 					value: function() { return {}; }
 				},
 
+				/**
+				* The data label path attribute can be used to change the default path "value" to a custom path. For example if set to "id" the data objects should look something like this {"id": 21, "label": "Mark"}.
+				*/
 				dataValuePath: {
 					type: String,
 					value: 'value'
 				},
 
+				/**
+				* The data label path attribute can be used to change the default path "label" to a custom path. For example if set to "name" the data objects should look something like this {"value": 21, "name": "Mark"}
+				*/
 				dataLabelPath: {
 					type: String,
 					value: 'label'
