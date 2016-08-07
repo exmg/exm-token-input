@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+	<head>
+		<title>exm-token-input demo</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+		<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+
+		<link rel="import" href="../exm-token-input.html">
+
+		<style is="custom-style" include="demo-pages-shared-styles"></style>
+		<style>
+			.centered { max-width: 700px !important; }
+		</style>
+	</head>
+	<body>
+
+		<div class="vertical-section-container centered">
+			<h3>Input Validation</h3>
+			<demo-snippet>
+				<template>
+					<exm-token-input label="Animals (Auto validate)" value="" required auto-validate></exm-token-input>
+					<exm-token-input label="Animals (Auto validate + Error message)" value="Cat" required auto-validate error-message="Input is required!"></exm-token-input>
+					<exm-token-input id="tokenInput" label="Animals" value="Cat" required></exm-token-input>
+					<button onclick="validate()">Validate!</button>
+					<script>
+						function validate() {
+							document.getElementById('tokenInput').validate();
+						}
+					</script>
+				</template>
+			</demo-snippet>
+		</div>
+
+		<div class="vertical-section-container centered">
+			<h3>Data Item Format</h3>
+			<demo-snippet>
+				<template>
+					<exm-token-input id="dif1" label="Users" value="Ronna"></exm-token-input>
+					<exm-token-input id="dif2" label="Users (Default item path)" value="1,3"></exm-token-input>
+					<exm-token-input id="dif3" label="Users (Custom item path)" value="2" data-value-path="id" data-label-path="name"></exm-token-input>
+					<exm-token-input id="dif4" label="Users (Custom item deep path)" value="3" data-value-path="user.id" data-label-path="user.name"></exm-token-input>
+					<script>
+						document.getElementById('dif1').data = ['Rubin','Gennie','Ronna','Jacquie','Norene','Beatris','Ginny','Tiesha','Leonore','Evonne'];
+						document.getElementById('dif2').data = [ { 'value': '1', 'label': 'Rubin' }, { 'value': '2', 'label': 'Gennie' }, { 'value': '3', 'label': 'Ronna' }];
+						document.getElementById('dif3').data = [ { 'id': '1', 'name': 'Rubin' }, { 'id': '2', 'name': 'Gennie' }, { 'id': '3', 'name': 'Ronna' }];
+						document.getElementById('dif4').data = [ { 'user': {'id': '1', 'name': 'Rubin' } }, { 'user': { 'id': '2', 'name': 'Gennie' } }, {  'user': { 'id': '3', 'name': 'Ronna' } }];
+					</script>
+				</template>
+			</demo-snippet>
+		</div>
+
+		<div class="vertical-section-container centered">
+			<h3>Data Item Sources</h3>
+			<demo-snippet>
+				<template>
+					<exm-token-input id="dis1" label="Users (Array)"></exm-token-input>
+					<exm-token-input id="dis2" label="Users (Function)"></exm-token-input>
+					<exm-token-input id="dis3" label="Users (Function returning promise)"></exm-token-input>
+					<script>
+						document.getElementById('dis1').data = ['Rubin','Gennie','Ronna','Jacquie','Norene','Beatris','Ginny','Tiesha','Leonore','Evonne'];
+						document.getElementById('dis2').data = function() {
+							return ['Rubin','Gennie','Ronna','Jacquie','Norene','Beatris','Ginny','Tiesha','Leonore','Evonne'];
+						}
+						document.getElementById('dis3').data = function() {
+							return new Promise(function(resolve) {
+								window.setTimeout( function() {
+									resolve(['Rubin','Gennie','Ronna','Jacquie','Norene','Beatris','Ginny','Tiesha','Leonore','Evonne']);
+								}, 1000);
+							});
+						};
+					</script>
+				</template>
+			</demo-snippet>
+		</div>
+
+		<div class="vertical-section-container centered">
+			<h3>More token input options</h3>
+			<demo-snippet>
+				<template>
+					<exm-token-input label="User Names (Prevent invalid input using Regex)" allowed-pattern='[a-zA-Z0-9-!]' prevent-invalid-input></exm-token-input>
+					<exm-token-input label="Users (Maximum of 3 names + floating label)" max-tokens="3" always-float-label data='["Rubin","Gennie","Ronna","Jacquie","Norene","Beatris","Ginny","Tiesha","Leonore","Evonne"]'></exm-token-input>
+					<exm-token-input label="Bet Amount Values" allowed-pattern='[0-9]' prevent-invalid-input>
+						<div prefix>$</div>
+					</exm-token-input>
+					<exm-token-input label="Disabled input" value="Test" disabled></exm-token-input>
+				</template>
+			</demo-snippet>
+		</div>
+
+	</body>
+</html>

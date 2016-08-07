@@ -1,0 +1,55 @@
+{
+  "name": "exm-token-input",
+  "description": "Paper style token input element",
+  "main": "exm-token-input.html",
+  "authors": [
+    "Mark Smits"
+  ],
+  "homepage": "http://exmg.github.io/exm-token-input/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/exmg/exm-token-input.git"
+  },
+  "keywords": [
+    "web-components",
+    "web-component",
+    "polymer",
+    "token",
+    "input",
+    "paper",
+    "material"
+  ],
+  "license": "MIT License",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "neon-animation": "PolymerElements/neon-animation#^1.2.4",
+    "iron-a11y-keys": "PolymerElements/iron-a11y-keys#^1.0.6",
+    "iron-icons": "PolymerElements/iron-icons#^1.1.3",
+    "iron-input": "PolymerElements/iron-input#^1.0.10",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.3.1",
+    "iron-selector": "PolymerElements/iron-selector#^1.5.2",
+    "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#^1.0.6",
+    "paper-button": "PolymerElements/paper-button#^1.0.12",
+    "iron-dropdown": "PolymerElements/iron-dropdown#^1.5.0",
+    "paper-styles": "PolymerElements/paper-styles#^1.1.4",
+    "paper-input": "PolymerElements/paper-input#^1.1.15",
+    "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#^1.1.7",
+    "iron-validatable-behavior": "PolymerElements/iron-validatable-behavior#^1.1.1"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "_release": "b3ba3741d3",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "b3ba3741d3bd0606ffcbbcd38d9032741cb99b06"
+  },
+  "_source": "git://github.com/exmg/exm-token-input.git",
+  "_target": "master",
+  "_originalSource": "exmg/exm-token-input",
+  "_direct": true
+}

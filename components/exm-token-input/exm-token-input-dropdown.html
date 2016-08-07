@@ -1,0 +1,107 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-dropdown/iron-dropdown.html">
+<link rel="import" href="../neon-animation/neon-animations.html">
+<link rel="import" href="../paper-styles/shadow.html">
+<link rel="import" href="exm-expand-animation.html">
+
+<dom-module id="exm-token-input-dropdown">
+	<template>
+		<style>
+			iron-dropdown {
+				background: var(--exm-token-input-dropdown-background-color, #fafafa);
+				color: var(--exm-token-input-dropdown-text-color, --secondary-text-color);
+				@apply(--shadow-elevation-2dp);
+				min-width: 280px;
+			}
+		</style>
+		<iron-dropdown id="dropdown"
+			vertical-align="[[verticalAlign]]"
+			horizontal-align="[[horizontalAlign]]"
+			auto-fit-on-attach="[[autoFitOnAttach]]"
+			no-overlap="[[noOverlap]]"
+			open-animation-config="[[openAnimationConfig]]"
+			close-animation-config="[[closeAnimationConfig]]">
+			<content id="contentNode" select=".dropdown-content"></content>
+		</iron-dropdown>
+	</template>
+	<script>
+		Polymer({
+			is: 'exm-token-input-dropdown',
+			properties: {
+				verticalAlign: String,
+				horizontalAlign: String,
+				autoFitOnAttach:{
+					type: Boolean,
+					value: false
+				},
+				noOverlap: {
+					type: Boolean,
+					value: false
+				},
+				disabled: Boolean,
+				dropdown: {
+					type: Object,
+					value: function() {
+						return this.$.dropdown;
+					}
+				},
+				openAnimationConfig: {
+					type: Array,
+					value: function() {
+						return [ {
+							name: 'fade-in-animation',
+							timing: {
+								delay: 150,
+								duration: 50
+							}
+						}, {
+							name: 'exm-expand-animation',
+							timing: {
+								delay: 150,
+								duration: 200
+							}
+						} ];
+					}
+				},
+				closeAnimationConfig: {
+					type: Array,
+					value: function() {
+						return [ {
+							name: 'fade-out-animation',
+							timing: {
+								duration: 300
+							}
+						} ];
+					}
+				}
+			},
+
+			listeners: {
+				'tap': '_handleItemTap'
+			},
+
+			_handleItemTap: function(e) {
+				e.preventDefault();
+				setTimeout(() => {
+					this.fire('item-selected', e.target.name);
+				},300);
+				e.stopPropagation();
+			},
+
+			/**
+			* Open can be used to open the dropdown list
+			*/
+			open: function() {
+				this.$.dropdown.open();
+			},
+
+			/**
+			* Close can be used to close the dropdown list
+			*/
+			close: function() {
+				this.$.dropdown.close();
+			},
+
+		});
+	</script>
+</dom-module>
