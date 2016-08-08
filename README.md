@@ -6,14 +6,26 @@ Paper style token input element. Please visit the [API Documentation and demo](h
 
 * Polymer paper style token input
 * Supports form element and validatable behaviour
-* Allow free input or options lists
-* Support Array/Function for options lists
+* Allow free input or list
+* Support Array/Function for option list
 
-## Install the Polymer-CLI
+## Usage
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
+```
+<exm-token-input label="Animals"></exm-token-input>
+<exm-token-input label="Animals (Inc Option list)" data='["Cat","Dog","Horse"]'></exm-token-input>
+```
+## Install
 
-## Viewing Your Application
+Install the component using bower
+
+```
+$ bower install --save exm-token-input
+```
+
+## Development
+
+First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run polymer server to launch the demo page.
 
 ```
 $ polymer serve
