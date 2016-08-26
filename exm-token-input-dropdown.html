@@ -82,9 +82,9 @@
 
 			_handleItemTap: function(e) {
 				e.preventDefault();
-				setTimeout(() => {
+				this.async(function(){
 					this.fire('item-selected', e.target.name);
-				},300);
+				}.bind(this), 300);
 				e.stopPropagation();
 			},
 
