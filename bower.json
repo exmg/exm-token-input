@@ -2,7 +2,7 @@
   "name": "exm-token-input",
   "description": "Paper style token input element",
   "main": "exm-token-input.html",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "authors": [
     "Mark Smits"
   ],
