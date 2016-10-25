@@ -187,6 +187,11 @@ Paper style token input element
 					}
 				},
 
+				allowedDuplicateValues: {
+					type: Boolean,
+					value: false
+				},
+
 				/**
 				* Regular expression that list the characters allowed as input. This pattern represents the allowed characters for the field; as the user inputs text, each individual character will be checked against the pattern (rather than checking the entire value as a whole). The recommended format should be a list of allowed characters; for example, [a-zA-Z0-9-!]
 				*/
@@ -443,8 +448,12 @@ Paper style token input element
 						var itemIndex = filtered.findIndex(function(filteredItem) {
 							return this._getItemValue(filteredItem) === this._getItemValue(item);
 						}.bind(this));
-						if(values.indexOf(this._getItemValue(item)) === -1 && itemIndex !== -1) {
+						if(this.allowedDuplicateValues) {
 							this.push('_filteredItems', item);
+						} else {
+							if(values.indexOf(this._getItemValue(item)) === -1 && itemIndex !== -1) {
+								this.push('_filteredItems', item);
+							}
 						}
 					}.bind(this));
 				}
