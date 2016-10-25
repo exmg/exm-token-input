@@ -545,6 +545,8 @@ Paper style token input element
 			_openDropdown: function() {
 				if(this._hasDropDown && !this.$.dropdownInput.dropdown.opened) {
 					this.$.dropdownInput.open();
+					this.$$('iron-selector').selected = this.$$('iron-selector').selected || 0;
+					console.log('OPEN', this.$$('iron-selector').selected);
 				}
 			},
 
