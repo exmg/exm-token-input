@@ -448,10 +448,9 @@ Paper style token input element
 						var itemIndex = filtered.findIndex(function(filteredItem) {
 							return this._getItemValue(filteredItem) === this._getItemValue(item);
 						}.bind(this));
-						if(this.allowedDuplicateValues) {
-							this.push('_filteredItems', item);
-						} else {
-							if(values.indexOf(this._getItemValue(item)) === -1 && itemIndex !== -1) {
+
+						if(itemIndex !== -1) {
+							if(this.allowedDuplicateValues || values.indexOf(this._getItemValue(item)) === -1) {
 								this.push('_filteredItems', item);
 							}
 						}
