@@ -4,8 +4,6 @@
 
 Paper style token input element. Please visit the [API Documentation and demo](http://exmg.github.io/exm-token-input/) page for more information.
 
-![Token input screenshot](http://cdn.playtotv.com/pttv-dev/U_ac6b5c18fc5f7fd5/22880916555679581/57a6f552e4b08eea93d33765.png)
-
 * Polymer paper style token input
 * Supports form element and validatable behaviour
 * Allow free input or list
@@ -24,7 +22,7 @@ Paper style token input element. Please visit the [API Documentation and demo](h
 ```
 -->
 ```html
-<exm-token-input label="Users" value="Ronna" data='["Rubin","Gennie","Ronna","Jacquie","Norene","Beatris","Ginny","Tiesha","Leonore","Evonne"]'></exm-token-input>
+<exm-token-input label="Users" value="Ronna,Beatris" data='["Rubin","Gennie","Ronna","Jacquie","Norene","Beatris","Ginny","Tiesha","Leonore","Evonne"]'></exm-token-input>
 <exm-token-input label="Users" value="2" data-value-path="user.id" data-label-path="user.name" data='[ { "user": {"id": "1", "name": "Rubin" } }, { "user": { "id": "2", "name": "Gennie" } }, {  "user": { "id": "3", "name": "Ronna" } }]'></exm-token-input>
 ```
 
