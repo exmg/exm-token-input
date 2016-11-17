@@ -1,4 +1,6 @@
-# \<exm-token-input\>
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://beta.webcomponents.org/element/exmg/exm-token-input)
+
+# exm-token-input
 
 Paper style token input element. Please visit the [API Documentation and demo](http://exmg.github.io/exm-token-input/) page for more information.
 
@@ -11,10 +13,21 @@ Paper style token input element. Please visit the [API Documentation and demo](h
 
 ## Usage
 
+<!---
 ```
-<exm-token-input label="Animals"></exm-token-input>
-<exm-token-input label="Animals (Inc Option list)" data='["Cat","Dog","Horse"]'></exm-token-input>
+<custom-element-demo>
+  <template>
+    <link rel="import" href="exm-token-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
 ```
+-->
+```html
+<exm-token-input label="Users" value="Ronna" data='["Rubin","Gennie","Ronna","Jacquie","Norene","Beatris","Ginny","Tiesha","Leonore","Evonne"]'></exm-token-input>
+<exm-token-input label="Users" value="2" data='[ { "user": {"id": "1", "name": "Rubin" } }, { "user": { "id": "2", "name": "Gennie" } }, {  "user": { "id": "3", "name": "Ronna" } }]'></exm-token-input>
+```
+
 ## Install
 
 Install the component using bower
