@@ -25,7 +25,7 @@ Paper style token input element. Please visit the [API Documentation and demo](h
 -->
 ```html
 <exm-token-input label="Users" value="Ronna" data='["Rubin","Gennie","Ronna","Jacquie","Norene","Beatris","Ginny","Tiesha","Leonore","Evonne"]'></exm-token-input>
-<exm-token-input label="Users" value="2" data='[ { "user": {"id": "1", "name": "Rubin" } }, { "user": { "id": "2", "name": "Gennie" } }, {  "user": { "id": "3", "name": "Ronna" } }]'></exm-token-input>
+<exm-token-input label="Users" value="2" data-value-path="user.id" data-label-path="user.name" data='[ { "user": {"id": "1", "name": "Rubin" } }, { "user": { "id": "2", "name": "Gennie" } }, {  "user": { "id": "3", "name": "Ronna" } }]'></exm-token-input>
 ```
 
 ## Install
