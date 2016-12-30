@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>exm-token-input test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+
+  <link rel="import" href="helpers.html">
+  <link rel="import" href="x-token.html">
+</head>
+<body>
+
+  <test-fixture id="tokenInput">
+    <template>
+      <x-token></x-token>
+    </template>
+  </test-fixture>
+
+<script>
+
+  suite('token input', function() {
+    var container, token;
+
+    setup(function() {
+      container = fixture('tokenInput');
+      token = container.$$('exm-token-input');
+    });
+
+    test('defaults', function() {
+      assert.equal(token.label, null, 'label');
+      assert.equal(token.value, '', 'value');
+      assert.equal(token.dataValuePath, 'value', 'dataValuePath');
+      assert.equal(token.dataLabelPath, 'label', 'dataLabelPath');
+      assert.equal(token.allowedPattern, null, 'allowedPattern');
+      assert.equal(token.maxTokens, null, 'maxTokens');
+
+      assert.isFalse(token.disabled, 'disabled');
+      assert.isFalse(token.allowedDuplicateValues, 'allowedDuplicateValues');
+      assert.isFalse(token.autoValidate, 'autoValidate');
+      assert.isFalse(token.preventInvalidInput, 'preventInvalidInput');
+
+    });
+
+  });
+
+  //a11ySuite('tokenInput');
+</script>
+
+</body>
+</html>
