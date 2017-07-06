@@ -89,7 +89,7 @@ Paper style token input element
 				<span class="tokens">
 					<template
 						is="dom-repeat"
-						items="[[_valueAsItemArray(value, _modeDropDown)]]"
+						items="[[_tokens]]"
 						as="token">
 						<paper-button
 							tabindex="-1"
@@ -100,6 +100,7 @@ Paper style token input element
 						id="inputValue"
 						is="iron-input"
 						aria-labelledby="label"
+						required$="[[required]]"
 						bind-value="{{_inputValue}}"
 						allowed-pattern="[[allowedPattern]]"
 						prevent-invalid-input="[[preventInvalidInput]]"
@@ -274,12 +275,28 @@ Paper style token input element
 				},
 
 				/**
+				 * Set to true to mark the input as required. If you're using PaperInputBehavior to
+				 * implement your own paper-input-like element, bind this to
+				 * the `<input is="iron-input">`'s `required` property.
+				 */
+				required: {
+					type: Boolean,
+					value: false
+				},
+
+				/**
 				* This field will be bind to the actual input field
 				*/
 				_inputValue: {
 					type: String,
 					notify: true,
 					value: ''
+				},
+
+				_tokens: {
+					type: Array,
+					computed: '_valueAsItemArray(value, _modeDropDown)',
+					observer: '_observeTokens'
 				}
 			},
 
@@ -306,6 +323,17 @@ Paper style token input element
 				'backspace': '_onBackspace'
 			},
 
+			/**
+			 * Returns a reference to the input element.
+			 */
+			get inputElement() {
+				return this.$.inputValue;
+			},
+
+			_observeTokens: function() {
+				console.log('_observeTokens');
+			},
+
 			attached: function() {
 				/* Initialize the input helper span element for determining the actual width of the input text. This width will be used to create a dynamic width on the input field */
 				this.$.inputWidthHelper.style = window.getComputedStyle(this.$.inputValue, null).cssText;
@@ -323,7 +351,7 @@ Paper style token input element
 			*/
 			getSelectedItems: function() {
 				if(this._modeDropDown) {
-					return this._valueAsItemArray();
+					return this._tokens();
 				}
 			},
 
@@ -523,6 +551,7 @@ Paper style token input element
 			},
 
 			_addToken: function(item) {
+				console.log('_addToken', item);
 				var values = this._valueAsArray();
 				if(this.maxTokens && values.length >= this.maxTokens) {
 					return;
@@ -551,6 +580,26 @@ Paper style token input element
 				if(this.autoValidate) {
 					this.validate();
 				}
+			},
+
+			/**
+			 * Returns true if `value` is valid. The validator provided in `validator` will be used first,
+			 * then any constraints.
+			 * @return {boolean} True if the value is valid.
+			 */
+			validate: function() {
+				var valid = true;
+
+				// Empty, required input is invalid
+				if (this.required && this.value === '') {
+					valid = false;
+				} else if (this.hasValidator()) {
+					valid = Polymer.IronValidatableBehavior.validate.call(this, this.value);
+				}
+
+				this.invalid = !valid;
+				this.fire('iron-input-validate');
+				return valid;
 			},
 
 			_handleContainerTap: function(e) {
