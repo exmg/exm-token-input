@@ -24,25 +24,39 @@ Paper style token input element
 			:host {
 				display: block;
 			}
+
 			:host([hidden]) {
 				display: none !important;
 			}
+
 			.tokens {
 				margin-right: 6px;
 				min-height: 24px;
+				position: relative;
+				width: 100%;
 			}
+
 			.tokens paper-button {
 				background: var(--exm-token-input-badge-color, --default-primary-color);
-				margin:2px 0;
+				margin: 2px 0;
 				color: var(--exm-token-input-badge-text-color, --text-primary-color);
-				height:18px;
+				height: 18px;
 				font-size: 12px;
 				min-width: initial;
+				max-width: 100%
 			}
+
+			.tokens paper-button span {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+
 			.tokens paper-button iron-icon {
 				height: 16px;
 				width: 16px;
 			}
+
 			input[is="iron-input"] {
 				font: inherit;
 				outline: none;
@@ -52,23 +66,29 @@ Paper style token input element
 				max-width: 100%;
 				min-width: 1.8em;
 			}
+
 			.container {
 				@apply(--layout-horizontal);
 			}
+
 			iron-selector > * {
 				padding: 16px 16px;
 			}
+
 			.horizontal-section {
 				padding: 0;
 			}
+
 			.iron-selected {
 				background-color: var(--exm-token-input-dropdown-selected-color, --default-primary-color);
 				color: var(--exm-token-input-dropdown-selected-text-color, --text-primary-color);
 			}
+
 			label,
 			.container {
 				cursor:text;
 			}
+
 			::content [prefix] {
 				margin-right: 4px;
 			}
@@ -94,7 +114,7 @@ Paper style token input element
 						<paper-button
 							tabindex="-1"
 							on-tap="_handleDeleteToken"
-							data-token$="[[_getItemValue(token)]]">[[_getItemLabel(token)]]<iron-icon icon="clear"></iron-icon></paper-button>
+							data-token$="[[_getItemValue(token)]]"><span>[[_getItemLabel(token)]]</span><iron-icon icon="clear"></iron-icon></paper-button>
 					</template>
 					<input
 						id="inputValue"
